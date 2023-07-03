@@ -39,8 +39,7 @@ function createBoard(){
       if(index >= 48){
         square.firstElementChild.firstElementChild.classList.add('brown');
       }
-      gameBoard.append(square);//at each loop we are putting these small squares onto out gameBoard                           
+      gameBoard.append(square);//at each loop we are putting these small squares onto out gameBoar                           
     })
 }
-
     createBoard();
