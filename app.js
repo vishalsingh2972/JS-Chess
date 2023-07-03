@@ -29,14 +29,14 @@ function createBoard(){
       square.firstChild?.setAttribute('draggable', true); //shorter form for above wala
 
       square.setAttribute('square-id', index) //like document.createElement allows us to create html elements dynamically via js similarly .setAttribute helps us change the properties or basically make changes inside html elements via js //The setAttribute() method can be used to modify the attributes of any HTML element, whether it was created dynamically using document.createElement() or obtained from the DOM using methods like document.querySelector() //When I mention "obtained from the DOM," it means accessing HTML elements in JavaScript and treating them as objects
-                                              //so here we have set a 'square-id' for each element as it loops thorugh the array and the value of that 'square-id' for each element is its index value
+                                              //so here we have set a 'square-id' for each element as it loops thorugh the array and the value of that 'square-id' for each element is set to its index value
 
       const row = Math.floor((63 - index) / 8) + 1; //index startion from 0 to 63
       if(row % 2 === 0){
-        square.classList.add(index % 2 === 0 ? "beige" : "green");
+        square.classList.add(index % 2 === 0 ? 'beige' : 'green');
       }
       else{
-        square.classList.add(index % 2 === 0 ? "green" : "beige");
+        square.classList.add(index % 2 === 0 ? 'green' : 'beige');
       }
 
       if(index <= 15){
@@ -52,9 +52,33 @@ function createBoard(){
 createBoard();
 
 //Grab every square
-const allSquares = document.querySelectorAll("#gameboard .square"); //document.querySelectorAll("#gameboard .square") - so what this does is look in the document for an element with the id gameboard and then grab element with class name square present inside gameboard // In JS, the document object represents the entire webpage 
+const allSquares = document.querySelectorAll("#gameboard .square"); //document.querySelectorAll("#gameboard .square") - so what this does is look in the document for an element with the id gameboard and then inside gameboard grab every element with the class name square // In JS, the document object represents the entire webpage 
 //document.querySelectorAll(".square"); //you can also do this directly - grab every element with the class name "square"
 
 //console.log(allSquares);
 
-allSquares.forEach()
+allSquares.forEach(SQUARE => {
+  SQUARE.addEventListener('dragstart', dragstart)
+  });
+
+  let startPositionId; 
+
+  function dragstart(e){//here e will store data of the piece that is being dragged
+
+    //console.log(e); //will print all data of the dragged piece
+    
+    //console.log(e.srcElement); //deprecated not good practise to use
+    //console.log(e.target); //recommended 
+    //console.log(e.target.parentNode);
+//getAttribute is used to retrieve the value of a specific HTML attribute of an element
+       //console.log(e.target.getAttribute('id'));
+       //console.log(e.target.parentNode.getAttribute('square-id'));
+
+       startPositionId = e.target.parentNode.getAttribute('square-id');
+       //console.log(startPositionId);
+  }
+
+  
+
+
+
