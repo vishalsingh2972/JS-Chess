@@ -58,12 +58,15 @@ const allSquares = document.querySelectorAll("#gameboard .square"); //document.q
 //console.log(allSquares);
 
 allSquares.forEach(SQUARE => {
-  SQUARE.addEventListener('dragstart', dragstart)
+  SQUARE.addEventListener('dragstart', dragStart)
+  SQUARE.addEventListener('dragover', dragOver)
   });
 
-  let startPositionId; 
+  let startPositionId;
+  let draggedElement; 
 
-  function dragstart(e){//here e will store data of the piece that is being dragged
+function dragStart(e){//here e will store data of the piece that is being dragged
+   //e.preventDefault(); //will prevent default behavior of dragstart or disable dragging of the element (default behaviour of dragstart is to enable dragging of the element)
 
     //console.log(e); //will print all data of the dragged piece
     
@@ -75,9 +78,19 @@ allSquares.forEach(SQUARE => {
        //console.log(e.target.parentNode.getAttribute('square-id'));
 
        startPositionId = e.target.parentNode.getAttribute('square-id');
-       //console.log(startPositionId);
-  }
+       console.log(startPositionId);
+       draggedElement =  e.target;
+       console.log(e.target);
+}
 
+function dragOver(e){
+  e.preventDefault(); //When you call e.preventDefault() , it instructs the browser to override the default behavior and allow the drop operation. This allows the element to become a valid drop target for the dragged content.
+                      //default behaviour - In the context of the dragover, the default behavior typically involves disallowing the dropping of content onto an element. By default, most elements do not allow dropping content on them.
+
+}
+
+
+  
   
 
 
