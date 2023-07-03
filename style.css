@@ -1,0 +1,25 @@
+#gameboard{ /* in css to style an HTML element with a specific ID we use #idname */ 
+  width: 320px;
+  height: 320px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.square{
+  width: 40px; /* 40 x 8 pieces = 320 gameboard width*/
+  height: 40px; /* 40 x 8 pieces = 320 gameboard height*/
+}
+
+.square svg{ /*if an element that has the class of square also has an svg in it - which is the pieces in pieces.js then we apply these properties*/
+  height: 30px;
+  width: 30px;
+  margin: 5px;
+}
+
+.beige{ /*alternate square colors*/
+  background-color: rgb(238, 238, 210);
+}
+
+.green{ /*alternate square colors*/
+  background-color: rgb(118, 150, 86);
+}
