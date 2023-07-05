@@ -1,6 +1,10 @@
 const gameBoard = document.querySelector("#gameboard");
-const player = document.querySelector('#player');
+const playerDisplay = document.querySelector('#player');
 const infoDisplay = document.querySelector("#info-display");
+let playerGo = 'black'; //playerTurn //starting game with black's turn
+
+//console.log(playerDisplay.textContent);
+playerDisplay.textContent = 'black'
 
 const width = 8;
 const startPieces = [
@@ -44,7 +48,7 @@ function createBoard(){
       }
 
       if(index >= 48){
-        square.firstElementChild.firstElementChild.classList.add('brown');
+        square.firstElementChild.firstElementChild.classList.add('white');
       }
       gameBoard.append(square);//at each loop we are putting these small squares onto out gameBoard                           
     })
@@ -53,7 +57,7 @@ createBoard();
 
 //Grab every square
 const allSquares = document.querySelectorAll("#gameboard .square"); //document.querySelectorAll("#gameboard .square") - so what this does is look in the document for an element with the id gameboard and then inside gameboard grab every element with the class name square // In JS, the document object represents the entire webpage 
-//document.querySelectorAll(".square"); //you can also do this directly - grab every element with the class name "square"
+//const allSquares = document.querySelectorAll(".square"); //you can also do this directly - grab every element with the class name "square"
 
 //console.log(allSquares);
 
@@ -75,7 +79,7 @@ function dragStart(e){//here e will store data of the piece that is being dragge
     //console.log(e.target); //recommended 
     //console.log(e.target.parentNode);
 //getAttribute is used to retrieve the value of a specific HTML attribute of an element
-       //console.log(e.target.getAttribute('id'));
+       //console.log(e.target.getAttribute('id')); //"piece that we are picking"
        //console.log(e.target.parentNode.getAttribute('square-id'));
 
        startPositionId = e.target.parentNode.getAttribute('square-id');
@@ -99,12 +103,103 @@ function dragDrop(e){ //can drop directly into empty squares but for filled squa
 //  console.log(e.target.parentNode);
    //console.log(e.target.parentNode.getAttribute('square-id'));
 
-   //e.target.parentNode.append(draggedElement); //drop the element that we are dragging i.e the "draggedElement" onto the new square class //but this is only when some piece exists in that "square" class because for empty squares it will not have a parentNode it will just have one "square" class(basically no parent class exists for empty squares)
+   //e.target.parentNode.append(draggedElement); //drop the element that we are dragging i.e the "draggedElement" onto the new square class //but this is only possible when some piece exists in that "square" class because for empty squares it will not have a parentNode it will just have one "square" class(basically no parent class exists for empty squares)
+   
    //e.target.append(draggedElement); //in case when we are dropping in an empty square, will just have one "square" class(basically no parent class exists for empty squares)
 
-//this should only happens if there is a piece present (i.e ""target piece") and the "target piece" is the opponent's piece
-   e.target.parentNode.append(draggedElement);
-   e.target.remove(); //remove the existing piece as we place a new piece over it
+    //console.log('playerGo - ', playerGo);  //will work same as  console.log('playerGo ' + playerGo); 
+    //console.log('piece picked - ', draggedElement); //jis piece ko hum uthare wo
+    const correctGo = draggedElement.firstElementChild.classList.contains(playerGo); // console.log(draggedElement.firstElementChild.classList.contains(playerGo));
+    //console.log('picked correct color as per turn/go - ', correctGo);
+    const taken = e.target.classList.contains('piece');
+    //console.log('square contains piece -', taken); //true if piece present at drop location and false if empty square at drop location
+
+    //console.log(' ');
+
+    const valid = CheckIfValid(e.target);
+
+    const opponentGo = playerGo === 'white' ? 'black' : 'white';
+    //console.log('opponentGo - ', opponentGo);
+    //console.log('piece on which dropped', e.target); //jis piece ke upar hum rakhre wo 
+    const takenByOpponent = e.target.firstElementChild?.classList.contains(opponentGo);
+    //console.log('did we drop on opponent color - ', takenByOpponent);
+    //console.log(!takenByOpponent);
+
+    if(correctGo){
+      //must check this first
+      if(takenByOpponent && valid){ 
+        //this will only happen if there is a piece present (i.e ""target piece") on the drop location/square and the "target piece" is the opponent's piece (takenByOpponent is true)
+        e.target.parentNode.append(draggedElement);
+        e.target.remove(); //remove the existing piece as we place a new piece over it
+        changePlayer();
+        return;
+      }
+      //then check this 
+      if(taken && !takenByOpponent){ //if piece present //opponent piece present already checked before this only in if(takenByOpponent) so here we do nothing
+        infoDisplay.textContent = "bhai apne walo ko hi marega kya?"
+        //infoDisplay resets itself to empty string after 5 sec
+        setTimeout(() => infoDisplay.textContent = " ", 500);
+        return;
+      }
+      //last if valid basically if dropping in empty square condition
+      if(valid){
+        e.target.append(draggedElement);
+        changePlayer();
+        return;
+      }
+    }
+}
+
+function CheckIfValid(target){ //here in target parameter we passed e.target
+  //console.log(target); 
+  //const targetId = target.getAttribute('square-id') || target.parentNode.getAttribute('square-id'); //targetId is square-id in square class //here for empty squares || for squares with pieces
+  // console.log(targetId);
+  // console.log(typeof targetId); //string
+//in order to perform calculations we convert value of targetId to a number
+  const targetId = Number(target.getAttribute('square-id')) || Number(target.parentNode.getAttribute('square-id'));
+  //console.log(targetId);
+  //console.log(typeof targetId); //number
+
+  //console.log(typeof startPositionId); //string
+  //const startId = startPositionId
+  const startId = Number(startPositionId); //converting string to number
+
+  const piece = draggedElement.id;
+
+  console.log('targetId', targetId);
+  console.log('startId', startId);
+  console.log('piece', piece);
+  
+}
+
+function changePlayer(){ //for taking turns between 2 for each each move
+  if(playerGo === 'black'){
+    reverseIds();
+    playerGo = 'white';
+    playerDisplay.textContent = 'white';
+  }
+  else{ //playerGo === 'white' case
+    revertIds();
+    playerGo = 'black';
+    playerDisplay.textContent = 'black';
+  }
+}
+
+//we use reverseIds() and revertIds() alternatively throughout the game
+
+function reverseIds(){ //shift board to opposite players perspective/view
+  const allSquares = document.querySelectorAll(".square"); //grab all squares directly 
+
+  allSquares.forEach((Square, index) => {
+    Square.setAttribute('square-id', (width * width - 1) - index) //overriding square-id with its reverse or opposite side square-id //so here inside brackets we are telling to replace existing 'square-id' value with  (width * width - 1) - index //(width * width - 1) - index cool shortway to reverse = here  (8 * 8 - 1) - index = 63 - index
+  });                                                      
+}
+
+function revertIds(){ //shift board back to your own perspective/view
+  const allSquares = document.querySelectorAll(".square"); //grabbing all squares directly again  
+
+  allSquares.forEach((square, index) => 
+    square.setAttribute('square-id', index));
 }
 
   

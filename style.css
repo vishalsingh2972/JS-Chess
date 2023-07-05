@@ -29,17 +29,17 @@ path{
 }
 
 .beige{ /*alternate square colors*/
-  background-color: rgb(238,238,210);
+  background-color: rgb(194, 194, 30);
 }
 
 .green{ /*alternate square colors*/
-  background-color: rgb(118, 150, 86);
+  background-color: rgb(65, 118, 11);
 }
 
 .black{ /*pieces colors*/
   fill: black; /*for changing colors of svg elements in css we use fill*/
 }
 
-.brown{ /*pieces colors*/
-  fill: rgb(107, 69, 38); /*for changing colors of svg elements in css we use fill*/
+.white{ /*pieces colors*/
+  fill: white; /*for changing colors of svg elements in css we use fill*/
 }
