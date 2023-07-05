@@ -87,12 +87,24 @@ function dragStart(e){//here e will store data of the piece that is being dragge
 function dragOver(e){
   e.preventDefault(); //When you call e.preventDefault() , it instructs the browser to override the default behavior and allow the drop operation. This allows the element to become a valid drop target for the dragged content.
                       //default behaviour - In the context of the dragover, the default behavior typically involves disallowing the dropping of content onto an element. By default, most elements do not allow dropping content on them.
-  
+
 }
 
-function dragDrop(){
-   
-  
+function dragDrop(e){ //can drop directly into empty squares but for filled squares we don't want to drop in the "piece" class or the svg or the path etc, our aim here is to drop it in the square class itself
+   e.stopPropagation(); //e.stopPropagation() method is used to stop the further propagation of the current event //once a piece is dropped stop this particular event and avoid funky behavior(If the e.stopPropagation() method is not called, then the parent element (parent of piece = square class) will also go with the "piece" class when it is dragged and dropped. This is because the drag and drop event will be propagated to the parent element)
+
+   //console.log(e.target.getAttribute('id')); //"target piece"
+//  console.log(e);
+//  console.log(e.target);
+//  console.log(e.target.parentNode);
+   //console.log(e.target.parentNode.getAttribute('square-id'));
+
+   //e.target.parentNode.append(draggedElement); //drop the element that we are dragging i.e the "draggedElement" onto the new square class //but this is only when some piece exists in that "square" class because for empty squares it will not have a parentNode it will just have one "square" class(basically no parent class exists for empty squares)
+   //e.target.append(draggedElement); //in case when we are dropping in an empty square, will just have one "square" class(basically no parent class exists for empty squares)
+
+//this should only happens if there is a piece present (i.e ""target piece") and the "target piece" is the opponent's piece
+   e.target.parentNode.append(draggedElement);
+   e.target.remove(); //remove the existing piece as we place a new piece over it
 }
 
   

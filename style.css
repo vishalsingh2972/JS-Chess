@@ -14,6 +14,18 @@
   height: 30px;
   width: 30px;
   margin: 5px;
+  position: relative;
+  z-index: -9;
+}
+
+path{
+  position: relative;
+  z-index: -10; /* -10 < -9 to ensure that path is always behind .square svg{ */
+}
+
+.piece{
+  position: relative;
+  z-index: 9; /* to ensure to put it infront of .square{ //so that when we drag over its the "piece" (class) that we are interacting with and that gets dragged over and not the "square" (class) */
 }
 
 .beige{ /*alternate square colors*/
