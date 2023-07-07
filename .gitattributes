@@ -1,1 +1,1 @@
-*.js linguist-detectable=false *.js linguist-language=js *.dart linguist-detectable=true JavaScript/* linguist-vendored build/* linguist-vendored
+*.* linguist-language=JavaScript
