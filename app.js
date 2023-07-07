@@ -399,16 +399,16 @@ function checkForWin(){
   const kings = Array.from(document.querySelectorAll('#king'));
   console.log(kings);
 
-  if(!kings.some(king => king.firstChild.classList.contains('white'))){
+  if(!kings.some(king => king.firstElementChild.classList.contains('white'))){
     infoDisplay.innerHTML = "Black player WINS !"
     const allSquares = document.querySelectorAll('.square');
-    allSquares.forEach(square => square.firstChild?.setAttribute('draggable', false))
+    allSquares.forEach(square => square.firstElementChild?.setAttribute('draggable', false))
   }
 
-  if(!kings.some(king => king.firstChild.classList.contains('black'))){
+  if(!kings.some(king => king.firstElementChild.classList.contains('black'))){
     infoDisplay.innerHTML = "White player WINS !"
     const allSquares = document.querySelectorAll('.square');
-    allSquares.forEach(square => square.firstChild?.setAttribute('draggable', false))
+    allSquares.forEach(square => square.firstElementChild?.setAttribute('draggable', false))
   }
 }
   
