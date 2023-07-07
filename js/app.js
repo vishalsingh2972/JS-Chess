@@ -4,7 +4,7 @@ const infoDisplay = document.querySelector("#info-display");
 let playerGo = 'black'; //playerTurn //starting game with black's turn
 
 //console.log(playerDisplay.textContent);
-playerDisplay.textContent = 'black'
+playerDisplay.textContent = 'black';
 
 const width = 8;
 const startPieces = [
