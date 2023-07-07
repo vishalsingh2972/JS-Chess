@@ -32,7 +32,7 @@ function createBoard(){
       //square.firstChild && square.firstChild.setAttribute('draggable', true); //if left falsy then right won't get evaluated - short circuit
       square.firstChild?.setAttribute('draggable', true); //shorter form for above wala
 
-      square.setAttribute('square-id', index) //like document.createElement allows us to create html elements dynamically via js similarly .setAttribute helps us change the properties or basically make changes inside html elements via js //The setAttribute() method can be used to modify the attributes of any HTML element, whether it was created dynamically using document.createElement() or obtained from the DOM using methods like document.querySelector() //When I mention "obtained from the DOM," it means accessing HTML elements in JavaScript and treating them as objects
+      square.setAttribute('square-id', index); //like document.createElement allows us to create html elements dynamically via js similarly .setAttribute helps us change the properties or basically make changes inside html elements via js //The setAttribute() method can be used to modify the attributes of any HTML element, whether it was created dynamically using document.createElement() or obtained from the DOM using methods like document.querySelector() //When I mention "obtained from the DOM," it means accessing HTML elements in JavaScript and treating them as objects
                                               //so here we have set a 'square-id' for each element as it loops thorugh the array and the value of that 'square-id' for each element is set to its index value
 
       const row = Math.floor((63 - index) / 8) + 1; //index startion from 0 to 63
@@ -85,7 +85,9 @@ function dragStart(e){//here e will store data of the piece that is being dragge
        startPositionId = e.target.parentNode.getAttribute('square-id');
        //console.log(startPositionId);
        draggedElement =  e.target;
-       //console.log(e.target);
+      //  console.log(e.target);
+      //  console.log(draggedElement);
+       
 }
 
 function dragOver(e){
@@ -98,9 +100,9 @@ function dragDrop(e){ //can drop directly into empty squares but for filled squa
    e.stopPropagation(); //e.stopPropagation() method is used to stop the further propagation of the current event //once a piece is dropped stop this particular event and avoid funky behavior(If the e.stopPropagation() method is not called, then the parent element (parent of piece = square class) will also go with the "piece" class when it is dragged and dropped. This is because the drag and drop event will be propagated to the parent element)
 
    //console.log(e.target.getAttribute('id')); //"target piece"
-//  console.log(e);
-//  console.log(e.target);
-//  console.log(e.target.parentNode);
+// console.log(e);
+// console.log(e.target);
+// console.log(e.target.parentNode);
    //console.log(e.target.parentNode.getAttribute('square-id'));
 
    //e.target.parentNode.append(draggedElement); //drop the element that we are dragging i.e the "draggedElement" onto the new square class //but this is only possible when some piece exists in that "square" class because for empty squares it will not have a parentNode it will just have one "square" class(basically no parent class exists for empty squares)
@@ -116,63 +118,74 @@ function dragDrop(e){ //can drop directly into empty squares but for filled squa
 
     //console.log(' ');
 
-    const valid = CheckIfValid(e.target);
+    const valid = checkIfValid(e.target);
 
     const opponentGo = playerGo === 'white' ? 'black' : 'white';
     //console.log('opponentGo - ', opponentGo);
     //console.log('piece on which dropped', e.target); //jis piece ke upar hum rakhre wo 
     const takenByOpponent = e.target.firstElementChild?.classList.contains(opponentGo);
-    //console.log('did we drop on opponent color - ', takenByOpponent);
-    //console.log(!takenByOpponent);
+    // console.log('did we drop on opponent color - ', takenByOpponent);
+    // console.log(!takenByOpponent);
 
     if(correctGo){
       //must check this first
-      if(takenByOpponent && valid){ 
-        //this will only happen if there is a piece present (i.e ""target piece") on the drop location/square and the "target piece" is the opponent's piece (takenByOpponent is true)
-        e.target.parentNode.append(draggedElement);
+      if(takenByOpponent && valid){ //this will only happen if there is a piece present (i.e ""target piece") on the drop location/square and that "target piece" is the opponent's piece (takenByOpponent is true)
+        e.target.parentNode.append(draggedElement); //putting draggedElement on the square class 
         e.target.remove(); //remove the existing piece as we place a new piece over it
         changePlayer();
-        return;
+        return; //causes to exit dragOver(e) function
       }
       //then check this 
-      if(taken && !takenByOpponent){ //if piece present //opponent piece present already checked before this only in if(takenByOpponent) so here we do nothing
+      if(taken && !takenByOpponent){ //if piece present and it is not opponent piece, basically when we are targetting our own piece condititon //opponent piece present or not is already checked before this only in if(takenByOpponent) so here we do nothing
         infoDisplay.textContent = "bhai apne walo ko hi marega kya?"
         //infoDisplay resets itself to empty string after 5 sec
         setTimeout(() => infoDisplay.textContent = " ", 500);
-        return;
+        return; //causes to exit dragOver(e) function
       }
       //last if valid basically if dropping in empty square condition
-      if(valid){
-        e.target.append(draggedElement);
+      if(valid){ //this is the case when the target square is empty and we simply drop our dragged element into the empty square
+        e.target.append(draggedElement); //putting draggedElement on the square class 
         changePlayer();
-        return;
+        return; //causes to exit dragOver(e) function
       }
     }
 }
 
-function CheckIfValid(target){ //here in target parameter we passed e.target
-  //console.log(target); 
-  //const targetId = target.getAttribute('square-id') || target.parentNode.getAttribute('square-id'); //targetId is square-id in square class //here for empty squares || for squares with pieces
-  // console.log(targetId);
-  // console.log(typeof targetId); //string
+function checkIfValid(target){ //here in target parameter we passed e.target
+    //console.log(target); 
+    //const targetId = target.getAttribute('square-id') || target.parentNode.getAttribute('square-id'); //targetId is square-id in square class //here for empty squares || for squares with pieces
+    // console.log(targetId);
+    // console.log(typeof targetId); //string
 //in order to perform calculations we convert value of targetId to a number
-  const targetId = Number(target.getAttribute('square-id')) || Number(target.parentNode.getAttribute('square-id'));
-  //console.log(targetId);
-  //console.log(typeof targetId); //number
+    const targetId = Number(target.getAttribute('square-id')) || Number(target.parentNode.getAttribute('square-id'));
+    //console.log(targetId);
+    //console.log(typeof targetId); //number
 
-  //console.log(typeof startPositionId); //string
-  //const startId = startPositionId
-  const startId = Number(startPositionId); //converting string to number
+    //console.log(typeof startPositionId); //string
+    //const startId = startPositionId
+    const startId = Number(startPositionId); //converting string to number
 
-  const piece = draggedElement.id;
+    const piece = draggedElement.id;
 
-  console.log('targetId', targetId);
-  console.log('startId', startId);
-  console.log('piece', piece);
-  
+    console.log('piece', piece); //piece picked
+    console.log('startId', startId); //picked piece 'square-id'
+    console.log('targetId', targetId); //drop piece 'square-id' 
+
+    switch(piece){
+        case 'pawn' : 
+            const starterRow = [8,9,10,11,12,13,14,15];
+            if(starterRow.includes(startId) && startId + width * 2 === targetId || 
+                startId + width === targetId ||
+                startId + width - 1 === targetId && document.querySelector(`[square-id = "${startId + width - 1}"]`).firstChild ||
+                startId + width + 1 === targetId && document.querySelector(`[square-id = "${startId + width + 1}"]`).firstChild)
+            {  //pawn valid moves
+              return true; //pawn valid moves so valid returns true
+            }
+            
+    }
 }
 
-function changePlayer(){ //for taking turns between 2 for each each move
+function changePlayer(){ //for taking turns between 2 for each move
   if(playerGo === 'black'){
     reverseIds();
     playerGo = 'white';
