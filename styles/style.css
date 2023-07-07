@@ -1,0 +1,45 @@
+#gameboard{ /* in css to style an HTML element with a specific ID we use #idname */ 
+  width: 320px;
+  height: 320px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.square{
+  width: 40px; /* 40 x 8 pieces = 320 gameboard width*/
+  height: 40px; /* 40 x 8 pieces = 320 gameboard height*/
+}
+
+.square svg{ /*if an element that has the class of square also has an svg in it - which is the pieces in pieces.js then we apply these properties*/
+  height: 30px;
+  width: 30px;
+  margin: 5px;
+  position: relative;
+  z-index: -9;
+}
+
+path{
+  position: relative;
+  z-index: -10; /* -10 < -9 to ensure that path is always behind .square svg{ */
+}
+
+.piece{
+  position: relative;
+  z-index: 9; /* to ensure to put it infront of .square{ //so that when we drag over its the "piece" (class) that we are interacting with and that gets dragged over and not the "square" (class) */
+}
+
+.beige{ /*alternate square colors*/
+  background-color: rgb(194, 214, 43);
+}
+
+.green{ /*alternate square colors*/
+  background-color: rgb(75, 153, 7);
+}
+
+.black{ /*pieces colors*/
+  fill: black; /*for changing colors of svg elements in css we use fill*/
+}
+
+.white{ /*pieces colors*/
+  fill: white; /*for changing colors of svg elements in css we use fill*/
+}
