@@ -175,12 +175,70 @@ function checkIfValid(target){ //here in target parameter we passed e.target
         case 'pawn' : 
             const starterRow = [8,9,10,11,12,13,14,15];
             if(starterRow.includes(startId) && startId + width * 2 === targetId || 
-                startId + width === targetId ||
-                startId + width - 1 === targetId && document.querySelector(`[square-id = "${startId + width - 1}"]`).firstChild ||
-                startId + width + 1 === targetId && document.querySelector(`[square-id = "${startId + width + 1}"]`).firstChild)
-            {  //pawn valid moves
+               startId + width === targetId ||
+               startId + width - 1 === targetId && document.querySelector(`[square-id = "${startId + width - 1}"]`).firstChild ||
+               startId + width + 1 === targetId && document.querySelector(`[square-id = "${startId + width + 1}"]`).firstChild)
+              {  //pawn valid moves
               return true; //pawn valid moves so valid returns true
-            }
+              }
+            break; //putting break to avoid unnecessary check of further cases //after break; will exit switch case statement 
+
+        case 'knight' :
+           if(
+              startId + width * 2 + 1 === targetId ||
+              startId + width * 2 - 1 === targetId ||
+              startId + width - 2 === targetId ||
+              startId + width + 2 === targetId ||
+
+              startId - width * 2 + 1 === targetId ||
+              startId - width * 2 - 1 === targetId ||
+              startId - width - 2 === targetId ||
+              startId - width + 2 === targetId 
+          )   {
+              return true;
+              }
+
+        case 'bishop' :
+           if(
+              startId + width + 1 === targetId ||
+              startId + width * 2 + 2 === targetId && document.querySelector(`[square-id = "${startId + width + 1}"]`).firstChild ||
+              startId + width * 3 + 3 === targetId && document.querySelector(`[square-id = "${startId + width + 1}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 2 + 2}"]`).firstChild ||
+              startId + width * 4 + 4 === targetId && document.querySelector(`[square-id = "${startId + width + 1}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 2 + 2}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 3 + 3}"]`).firstChild ||
+              startId + width * 5 + 5 === targetId && document.querySelector(`[square-id = "${startId + width + 1}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 2 + 2}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 3 + 3}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 4 + 4}"]`).firstChild ||
+              startId + width * 6 + 6 === targetId && document.querySelector(`[square-id = "${startId + width + 1}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 2 + 2}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 3 + 3}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 4 + 4}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 5 + 5}"]`).firstChild ||
+              startId + width * 7 + 7 === targetId && document.querySelector(`[square-id = "${startId + width + 1}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 2 + 2}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 3 + 3}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 4 + 4}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 5 + 5}"]`).firstChild && document.querySelector(`[square-id = "${startId + width * 6 + 6}"]`).firstChild
+              // --
+              startId - width - 1 === targetId ||
+              startId - width * 2 - 2 === targetId && document.querySelector(`[square-id = "${startId - width - 1}"]`).firstChild ||
+              startId - width * 3 - 3 === targetId && document.querySelector(`[square-id = "${startId - width - 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 - 2}"]`).firstChild ||
+              startId - width * 4 - 4 === targetId && document.querySelector(`[square-id = "${startId - width - 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 - 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 - 3}"]`).firstChild ||
+              startId - width * 5 - 5 === targetId && document.querySelector(`[square-id = "${startId - width - 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 - 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 - 3}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 4 - 4}"]`).firstChild ||
+              startId - width * 6 - 6 === targetId && document.querySelector(`[square-id = "${startId - width - 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 - 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 - 3}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 4 - 4}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 5 - 5}"]`).firstChild ||
+              startId - width * 7 - 7 === targetId && document.querySelector(`[square-id = "${startId - width - 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 - 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 - 3}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 4 - 4}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 5 - 5}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 6 - 6}"]`).firstChild
+              // --
+              startId - width + 1 === targetId ||
+              startId - width * 2 + 2 === targetId && document.querySelector(`[square-id = "${startId - width + 1}"]`).firstChild ||
+              startId - width * 3 + 3 === targetId && document.querySelector(`[square-id = "${startId - width + 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 + 2}"]`).firstChild ||
+              startId - width * 4 + 4 === targetId && document.querySelector(`[square-id = "${startId - width + 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 + 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 + 3}"]`).firstChild ||
+              startId - width * 5 + 5 === targetId && document.querySelector(`[square-id = "${startId - width + 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 + 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 + 3}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 4 + 4}"]`).firstChild ||
+              startId - width * 6 + 6 === targetId && document.querySelector(`[square-id = "${startId - width + 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 + 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 + 3}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 4 + 4}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 5 + 5}"]`).firstChild ||
+              startId - width * 7 + 7 === targetId && document.querySelector(`[square-id = "${startId - width + 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 + 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 + 3}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 4 + 4}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 5 + 5}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 6 + 6}"]`).firstChild
+              // --
+              startId + width - 1 === targetId ||
+              startId + width * 2 - 2 === targetId && document.querySelector(`[square-id = "${startId + width - 1}"]`).firstChild ||
+              startId + width * 3 - 3 === targetId && document.querySelector(`[square-id = "${startId + width - 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 - 2}"]`).firstChild ||
+              startId + width * 4 - 4 === targetId && document.querySelector(`[square-id = "${startId + width - 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 - 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 - 3}"]`).firstChild ||
+              startId + width * 5 - 5 === targetId && document.querySelector(`[square-id = "${startId + width - 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 - 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 - 3}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 4 - 4}"]`).firstChild ||
+              startId + width * 6 - 6 === targetId && document.querySelector(`[square-id = "${startId + width - 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 - 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 - 3}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 4 - 4}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 5 - 5}"]`).firstChild ||
+              startId + width * 7 - 7 === targetId && document.querySelector(`[square-id = "${startId + width - 1}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 2 - 2}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 3 - 3}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 4 - 4}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 5 - 5}"]`).firstChild && document.querySelector(`[square-id = "${startId - width * 6 - 6}"]`).firstChild
+              
+              
+          )   {
+              return true;
+              }
+
+
+
             
     }
 }
