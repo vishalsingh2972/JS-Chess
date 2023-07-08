@@ -5,7 +5,7 @@ This project is a simple chess game built using vanilla JavaScript. It is a play
 
 This project was built as a way to learn more about JavaScript. It was also a fun challenge to try to build a complete game using only vanilla JavaScript.
 
-### Future Updates
+## Future Updates
 The project is still under development, and there are a number of features that I would like to add in the future. These features include:
 
 - ```A timer``` : This would add an element of strategy and urgency to the game. Players would have to think carefully about their moves and make sure they don't run out of time.
