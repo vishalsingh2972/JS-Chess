@@ -1,10 +1,10 @@
 const gameBoard = document.querySelector("#gameboard");
 const playerDisplay = document.querySelector('#player');
 const infoDisplay = document.querySelector("#info-display");
-let playerGo = 'black'; //playerTurn //starting game with black's turn
+let playerGo = 'white'; //playerTurn //starting game with black's turn
 
 //console.log(playerDisplay.textContent);
-playerDisplay.textContent = 'black';
+playerDisplay.textContent = 'white';
 
 const width = 8;
 const startPieces = [
