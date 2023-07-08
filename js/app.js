@@ -59,10 +59,8 @@ allSquares.forEach(SQUARE => {
   let draggedElement; 
 
 function dragStart(e){
-   
-       startPositionId = e.target.parentNode.getAttribute('square-id');
-       draggedElement =  e.target;
-     
+  startPositionId = e.target.parentNode.getAttribute('square-id');
+  draggedElement =  e.target;   
 }
 
 function dragOver(e){
@@ -70,7 +68,6 @@ function dragOver(e){
 }
 
 function dragDrop(e){ 
-
     e.stopPropagation();
     const correctGo = draggedElement.firstElementChild.classList.contains(playerGo); 
     const taken = e.target.classList.contains('piece');
@@ -333,7 +330,7 @@ function revertIds(){
     square.setAttribute('square-id', index));
 }
 
-function checkForWin() {
+function checkForWin(){
   const kings = Array.from(document.querySelectorAll("#king"));
   console.log(kings);
   if (!kings.some(king => king.firstElementChild.classList.contains("white"))) {
